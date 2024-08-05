@@ -1,0 +1,26 @@
+body {
+    margin: auto;
+    max-width: 1200px;
+    background-color: white;
+    font-family: monospace;
+}
+
+section {
+    margin-bottom: 6rem;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+button {
+    padding: 1rem;
+    font-size: medium;
+    color: black;
+}
