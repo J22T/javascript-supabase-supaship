@@ -28,6 +28,14 @@ loginButton.addEventListener("click", () => {
     });
 });
 
+createThing.addEventListener("click", async () => {
+    const {
+        data: { user },
+    } = await supaClient.auth.getUser();
+    const thing = createRandomThing(user);
+    await supaClient.from("things").insert([thing]);
+});
+
 logoutButton.addEventListener("click", () => {
     supaClient.auth.signOut();
 });
@@ -35,6 +43,8 @@ logoutButton.addEventListener("click", () => {
 // init
 
 checkUserOnStartUp();
+const myThings = {};
+getAllInitialThings();
 
 supaClient.auth.onAuthStateChange((_event, session) => {
     if (session?.user) {
@@ -71,4 +81,50 @@ function adjustForNoUser() {
     whenSignedIn.hidden = true;
     whenSignedOut.hidden = false;
     myThingsSection.hidden = true;
+}
+
+async function getAllInitialThings() {
+    const { data } = await supaClient.from("things").select();
+    for (const thing of data) {
+        allThings[thing.id] = thing;
+    }
+    renderAllThings();
+}
+
+function renderAllThings() {
+    const tableHeader = `
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Weight</th>
+        </tr>
+    </thead>`;
+        const tableBody = Object.values(allThings)
+            .sort((a, b) => (a.weight > b.weight ? -1 : 1))
+            .map((thing) => {
+                return `
+        <tr>
+            <td>${thing.name}</td>
+            <td>${thing.weight}</td>
+        </tr>`;
+            })
+            .join("");
+        const table = `
+    <table class="table table-striped">
+        ${tableHeader}
+        <tbody>${tableBody}</tbody>
+        </table>`;
+            allThingsList.innerHTML = table;
+}
+
+function createRandomThing(user) {
+    if (!user) {
+        console.error("Must be signed in to create a thing");
+        return;
+    }
+    return {
+        name: faker.commerce.productName(3),
+        weight: Math.round(Math.random() * 100),
+        owner: user.id,
+    };
 }

@@ -2,15 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0", user-scalable="no">
     <title>SupaShip</title>
     <script src="https://unpkg.com/@supabase/supabase-js"></script>
     <script src="app.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <script type="module">
-        import { faker } from "https://cdn.skypack.dev/@faker-js/faker";
-        window.faker = faker;
-    </script>
+        import { faker } from "https://esm.sh/@faker-js/faker";
+      
+        const randomName = faker.person.fullName();
+      
+        const randomEmail = faker.internet.email();
+      </script>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css"
+    crossorigin="anonymous"
+    />
 </head>
 <body>
     <h1>JavaScript-Supabase-Supabase</h1>
@@ -37,5 +45,6 @@
         <h2>All Things</h2>
         <div id="allThingsList"></div>
     </section>
+
 </body>
 </html>

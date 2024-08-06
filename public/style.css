@@ -3,10 +3,11 @@ body {
     max-width: 1200px;
     background-color: white;
     font-family: monospace;
+    padding: 2rem;
 }
 
 section {
-    margin-bottom: 6rem;
+    margin-bottom: 5rem;
 }
 
 h1 {
